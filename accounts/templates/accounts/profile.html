@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head_css_section %}
+<style type="text/css">
+    img.user_icon {
+        width: 6rem;
+        vertical-align: middle;
+        display: inline;
+        float: left;
+        border-style: none;
+    }
+    h1, h4 {
+        text-align: left;
+        padding-left: 7rem;
+    }
+    h4 {
+        margin-bottom: 2rem;
+    }
+    b {
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 30px;
+
+    }
+    p {
+        text-align: left;
+        color: #1966bc;
+    }
+</style>
+{% endblock head_css_section %}
+
+{% block content %}
+<section class="content_section">
+
+    {% if user.is_authenticated %}
+    <img class="user_icon" src="{% static 'pwa/images/icons/user-icon-material.jpg' %}"/>
+        <h1>{{ user.get_full_name }}</h1>
+        <h4>{{ user.email }}
+            {% if user.email_confirmed %}
+                <img class="verified_user" src="{% static 'pwa/images/icons/verified_user_grey_18x18.png' %}" title="{{ _('Verified Email') }}" />
+            {% endif %}
+        </h4>
+        <b>{% trans "Username" %}:</b><p> {{ user.username }} </p>
+        <b>{% trans "Name" %}:</b><p> {{ user.first_name }}</p>
+        <b>{% trans "Last Name" %}:</b><p> {{ user.last_name }}</p>
+        <b>RUT:</b><p> {{ user.rut }}</p>
+        <b>{% trans "Phone" %}:</b><p> {{ user.telephone }}</p>
+        <b>{% trans "Address" %}:</b><p> {{ user.address }}</p>
+        <b>{% trans "Birthdate" %}:</b><p> {{ user.birth_date }}</p>
+        <b>{% trans "User since" %}:</b><p> {{ user.date_joined }}</p>
+        <b>{% trans "Last updated" %}:</b><p> {{ user.updated_at }}</p>
+        {% if user.image %}
+        <img src="{{ user.image.url }}" width="240" />
+        {% endif %}
+    {% else %}
+        <div class="submit-row">
+            <a href="{% url 'accounts:login' %}" class="btn">{% trans "Login" %}</a>
+        </div>
+    {% endif %}
+    
+    <a href="#" class="contact-link">{% trans "Contact Us" %}</a>
+    {% if user.is_authenticated %}
+     | <a href="#" class="edit_profile-link">{% trans "Edit Profile" %}</a>
+     | <a href="{% url 'accounts:logout' %}" class="logout-link">{% trans "Sign Out" %}</a>
+    {% else %}
+     | <a href="{% url 'accounts:register' %}" class="register-link">{% trans "Register" %}</a>
+     | <a href="#" class="password_reset-lkink">{% trans "Forgot your password?" %}</a>
+    {% endif %}
+    
+
+
+</section>
+{% endblock content %}

@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.element {
+  @include clearfix;
+}
+
+html, body {
+  font-family: 'Raleway', sans-serif;
+}
+
+#app {
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  text-align: center;
+  font-size: 130%;
+  font-weight: 100;
+}
+pre {
+  text-align: left;
+}
+input {
+  background-color: white;
+  border: 1px solid gray;
+}
+input[type=checkbox],
+input[type=radio] {
+  position: absolute;
+  opacity: 0;
+}
+input[type=checkbox] + label,
+input[type=radio] + label {
+  display: inline-block;
+}
+input[type=checkbox] + label:before,
+input[type=radio] + label:before {
+  content: "";
+  display: inline-block;
+  vertical-align: -0.2em;
+  width: 1em;
+  height: 1em;
+  border: 0.15em solid #0074d9;
+  border-radius: 0.2em;
+  margin-right: 0.3em;
+  background-color: white;
+}
+input[type=radio] + label:before {
+  border-radius: 50%;
+}
+input[type=radio]:checked + label:before,
+input[type=checkbox]:checked + label:before {
+  background-color: #0074d9;
+  box-shadow: inset 0 0 0 0.15em white;
+}
+input[type=radio]:focus + label:before,
+input[type=checkbox]:focus + label:before {
+  outline: 0;
+}
+input[type=text], input[type=password], input[type=email] {
+    clear: both;
+    padding: 8px;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.btn {
+  font-size: 100%;
+  letter-spacing: 1px;
+  border: 0;
+  background-color: #3e9ee0;
+  color: white;
+  padding: 5px 130px;
+  border-radius: 40px;
+}
+.btn:hover {
+  background-color: #3e9ee0;
+  color: white;
+}
+.btn:focus {
+  outline: none !important;
+}
+.btn.btn-lg {
+  padding: 20px 30px;
+}
+.btn:disabled {
+  background-color: #333;
+  color: #666;
+}
+h1,
+h2,
+h3 {
+  font-weight: 100;
+}
+#logo img {
+  width: 300px;
+  margin-bottom: 60px;
+}
+.home-description {
+  font-weight: 100;
+  margin: 100px 0;
+}
+h2 {
+  font-size: 200%;
+}
+label {
+  font-size: 90%;
+  font-weight: 300;
+}
+.btn-next {
+  margin-top: 30px;
+}
+.answer {
+  width: 70%;
+  margin: auto;
+  text-align: left;
+  padding-left: 10%;
+  margin-bottom: 20px;
+}
+.login-page .login-box {
+  padding: 100px 0;
+}
+
+
+/*FORM*/
+/* LOGIN FORM */
+
+#content {
+    padding: 2% 1%;
+    max-width: 800px;
+}
+
+ul.errorlist {
+    list-style: none;
+    padding: 0;
+}
+ul.errorlist li .errorlist{
+    list-style: circle;
+    padding-left: 1.5rem;
+}
+
+ul.errorlist li {
+    text-align: left;
+    font-weight: bold;
+}
+
+ul.errorlist > .errorlist li{
+    /*text-align: center;*/
+    font-weight: normal;
+}
+
+.alert-secondary, .alert-debug {
+    color: #383d41;
+    background-color: #e2e3e5;
+    border-color: #d6d8db;
+}
+
+.alert-danger, .alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+section.content_section {
+    margin: 0 auto;
+    margin-top: 3%;
+}
+
+.content_section #header {
+    height: auto;
+    padding: 5px 16px;
+}
+
+.content_section #header h1 {
+    font-size: 18px;
+}
+
+.content_section #header h1 a {
+    color: #3e9ee0;
+}
+
+.content_section #content {
+    padding: 20px 20px 0;
+}
+
+.content_section #container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 28em;
+    min-width: 300px;
+    margin: 100px auto;
+}
+
+.content_section #content-main {
+    width: 100%;
+}
+
+.content_section .form-row {
+    padding: 4px 0;
+    float: left;
+    width: 100%;
+}
+
+.content_section .form-row label {
+    padding-right: 0.5em;
+    line-height: 2em;
+    font-size: 1em;
+    clear: both;
+    color: #333;
+}
+
+.content_section .form-row ul {
+    text-align: left;
+    padding-left: 15px;
+    font-size: 12px;
+}
+.content_section .form-row #id_username, .content_section .form-row #id_password {
+    clear: both;
+    padding: 8px;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.content_section .form-row p {
+  width: 100%;
+  text-align: left;
+}
+
+.content_section .form-row .error {
+  color: red;
+  font-size: 13px;
+  display: block;
+}
+
+.content_section .form-row .help {
+    font-size: 12px;
+    color: gray;
+    display: block;
+}
+.content_section .submit-row {
+    clear: both;
+    margin: 0;
+    border: none;
+    padding: 8% 0 3% 0;
+    background: none;
+}
+
+.content_section .password_reset-link {
+    text-align: center;
+    color: purple;
+}
+
+/****** Sections ********/
+
+.section_message{
+  margin: 10% auto;
+  text-align: center;
+  max-width: 800px;
+  min-height: 60px;
+}
+

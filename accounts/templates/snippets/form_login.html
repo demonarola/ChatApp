@@ -1,0 +1,19 @@
+<form method="post" action="{% url 'accounts:login' %}">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-row {{ field.required }}">
+        {{ field.label_tag }}
+        {{ field }}
+        {% for error in field.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+        {% if field.help_text %}
+          <p class="help">{{ field.help_text }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="submit-row">
+        <input type="submit" class="btn" value="Entrar" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+</form>

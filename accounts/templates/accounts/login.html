@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %} 
+
+{% block title %}{% trans "Login" %}{% endblock %}
+
+{% block content %}
+<section class="form content_section">
+
+    <h2>{% trans "Login" %}</h2>
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            {% trans "Your account has not permission to access this page. Please" %} <a href="{% url 'logout' %}?next={{ next }}" class="login">{% trans "Login with an Account with the proper access." %}</a>.
+        </div>
+        <div class="submit-row">
+            <a href="{% url 'accounts:login' %}" class="btn">{% trans "Continue" %}</a>
+        </div>
+        {% else %}
+        <p>{% trans "Please login to see this page" %}.</p>
+        {% include 'snippets/form_login.html' with csrf_token=csrf_token field=field next=next %}
+        {% endif %}
+
+    {% else %}
+    {% include 'snippets/form_login.html' with csrf_token=csrf_token field=field next=next %}
+    {% endif %}
+
+
+    <a href="#" class="password_reset-link">{% trans "Forgot your password?" %}</a> | <a href="{% url 'accounts:register' %}" class="register-link">{% trans "Register" %}</a>  | <a href="#" class="contact-link">{% trans "Contact Us" %}</a>
+
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Register" %}{% endblock %}
+
+{% block head %}
+{{ form.media }} <!-- needed for JS/GoogleMaps lookup -->
+{% endblock head %}
+
+{% block content %}
+<section class="form content_section">
+
+  <h2>{% trans "Register" %}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-row {{ field.required }}">
+        {{ field.label_tag }}
+        {{ field }}
+        {% for error in field.errors %}
+          <p class="error">{{ error }}</p>
+        {% endfor %}
+        {% if field.help_text %}
+          <p class="help">{{ field.help_text }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="submit-row">
+      <button type="submit" class="btn">{% trans "Register" %}</button>
+    </div>
+  </form>
+
+  <a href="#" class="password_reset-link">{% trans "Forgot your password?" %}</a> | <a href="{% url 'accounts:login' %}" class="login-link">{% trans "Login" %}</a> | <a href="#" class="contact-link">{% trans "Contact Us" %}</a>
+
+</section>
+{% endblock %}

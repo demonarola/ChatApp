@@ -1,0 +1,13 @@
+{% load i18n %}
+{% autoescape off %}
+
+{% blocktrans %}
+Hi {{ user.username }},
+{% endblocktrans %}
+
+{% trans "Please click on" %} <a href="{% if not rest_api %}http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}{% else %}
+http://{{ domain }}{% url 'api:users-activate' %}?uidb64={{uid}}&token={{token}}{% endif %}">{% trans "this link" %}</a>
+
+{% trans "to activate your Account." %}
+
+{% endautoescape %}

@@ -1,0 +1,146 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>
+    		{% block title %}Chat App{% endblock title %}
+    	</title>
+    	{% block head_favicon %}
+        <link rel='apple-touch-icon' sizes='57x57' href='{% static "img/apple-icon-57x57.png" %}' />
+		<link rel='apple-touch-icon' sizes='60x60' href='{% static "img/apple-icon-60x60.png" %}' />
+		<link rel='apple-touch-icon' sizes='72x72' href='{% static "img/apple-icon-72x72.png" %}' />
+		<link rel='apple-touch-icon' sizes='76x76' href='{% static "img/apple-icon-76x76.png" %}' />
+		<link rel='apple-touch-icon' sizes='114x114' href='{% static "img/apple-icon-114x114.png" %}' />
+		<link rel='apple-touch-icon' sizes='120x120' href='{% static "img/apple-icon-120x120.png" %}' />
+		<link rel='apple-touch-icon' sizes='144x144' href='{% static "img/apple-icon-144x144.png" %}' />
+		<link rel='apple-touch-icon' sizes='152x152' href='{% static "img/apple-icon-152x152.png" %}' />
+		<link rel='apple-touch-icon' sizes='180x180' href='{% static "img/apple-icon-180x180.png" %}' />
+		<link rel='icon' type='image/png' sizes='192x192'  href='{% static "img/android-icon-192x192.png" %}' />
+		<link rel='icon' type='image/png' sizes='32x32' href='{% static "img/favicon-32x32.png" %}' />
+		<link rel='icon' type='image/png' sizes='96x96' href='{% static "img/favicon-96x96.png" %}' />
+		<link rel='icon' type='image/png' sizes='16x16' href='{% static "img/favicon-16x16.png" %}' />
+		<link rel='manifest' href='{% static "img/manifest.json" %}' />
+		<meta name='msapplication-TileImage' content='{% static "img/ms-icon-144x144.png" %}' />
+		<meta name='msapplication-TileColor' content='#ffffff' />
+		<meta name='theme-color' content='#ffffff' />
+        <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+		{% endblock head_favicon %}
+
+        {% block head_meta %}
+            {% block head_meta_charset %}
+                <meta http-equiv='Content-Type'
+                      content='text/html; charset=utf-8' />
+            {% endblock head_meta_charset %}
+            {% block head_meta_contentlanguage %}
+                <meta http-equiv='Content-Language' value='es' />
+            {% endblock head_meta_contentlanguage %}
+            {% block head_meta_viewport %}
+                <meta name='viewport'
+                      content='width=device-width, initial-scale=1.0' />
+            {% endblock head_meta_viewport %}
+        {% endblock head_meta %}
+
+        {% block head %}
+        {% endblock head %}
+        {% block head_css %}
+            {% block head_css_site %}
+                <!-- Bootstrap 4 -->
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+                <!-- Font Awesome -->
+                <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+                <!-- Moment.js -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+                <script src='{% static "js/moment.es.js" %}'></script>
+
+                <!-- Tempus Dominus Bootstrap 4 -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+
+                <link href='{% static "css/app.css" %}' rel='stylesheet' />
+            {% endblock head_css_site %}
+            {% block head_css_section %}{% endblock head_css_section %}
+            {% block head_css_page %}{% endblock head_css_page %}
+        {% endblock head_css %}
+    </head>
+    <body>
+    <div class="wrapper">   
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'home' %}"><h2>Chat App</h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="nav-link" target="_blank" href="#" target="_blank">API Schema JS</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" target="_blank" href="{% url 'admin:jsi18n' %}"  target="_blank">jsi18n</a>
+                    </li>
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="#">API Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="api/v1">API</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" target="_blank" href="{% url 'admin:index' %}">Admin</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans "Change Password" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans "View Profile" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans "Edit Profile" %}</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'accounts:logout' %}">{% trans "Sign Out" %}</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">{% trans "Login" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:register' %}">{% trans "Register" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">{% trans "Reset Password" %}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <div id="content" class="container">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                {{ message }}
+              </div>
+            {% endfor %}
+            {% if '/login' in request.path and form.errors and not user.is_authenticated  %}
+            <div class="alert alert-warning" role="alert">
+            Nombre de usuario y contraseña ingresados no coinciden con nuestros registros. Por favor, comprueba y vuelve a intentarlo.
+            </div>
+            {% endif %}
+            {% block content %}
+
+            {% endblock %}
+        </div><!-- end #content -->
+        <div class="footer bg-white">
+        </div>
+    </div>
+    </body>
+</html>

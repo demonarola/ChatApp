@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<section class="content_section">
+	<div class="section_message">
+	{% trans "Link expired or not valid" %}
+	</div>
+	<div class="submit-row">
+		<a href="{% url 'home' %}" class="btn">{% trans "Continue" %}</a>
+    </div>
+</section>
+{% endblock %}
