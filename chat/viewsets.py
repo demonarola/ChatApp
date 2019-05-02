@@ -12,7 +12,7 @@ class ChatMessageViewSet(viewsets.ModelViewSet):
     """
     A simple ViewSet for listing or retrieving Chat messages.
     """
-    queryset = ChatMessages.objects.all()
+    queryset = ChatMessages.objects.all().order_by('-created_at')
     serializer_class = ChatMessageSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_fields = ('chat_room',)
