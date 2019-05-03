@@ -16,10 +16,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-
-        await self.accept()
-        room, created = ChatRoom.objects.get_or_create(name=self.room_name)
-        room.user.add(User.objects.get(username=self.scope["user"]))
+        user = self.scope["user"]
+        if user.is_anonymous:
+            # Reject the connection
+            await self.close()
+        else:
+            # Accept the connection
+            await self.accept()
+            room, created = ChatRoom.objects.get_or_create(name=self.room_name)
+            room.user.add(User.objects.get(username=user))
 
     async def disconnect(self, close_code):
         # Leave room group

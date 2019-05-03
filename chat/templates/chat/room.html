@@ -190,7 +190,7 @@ body {
     var roomName = {{ room_name_json }};
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
-        '/ws/chat/' + roomName + '/');
+        '/ws/chat/' + roomName + '/?Token={{token}}');
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);

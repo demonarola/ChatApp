@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
+from rest_framework.authtoken.models import Token
 import json
 
 from .models import ChatRoom
@@ -12,14 +13,18 @@ def index(request):
 
 @login_required
 def room(request, room_name):
+    user = None
+    token = None
     try:
         room = ChatRoom.objects.get(name=room_name)
         room_id = room.id
     except ChatRoom.DoesNotExist:
         room_id = None
-
+    if not request.user.is_anonymous:
+        token = Token.objects.get(user=request.user)
+        user = request.user
     return render(request, 'chat/room.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
-        'room_id': room_id,
-        'user': request.user.id
+        'room_id': room_id, 'token': token,
+        'user': user.id
     })
