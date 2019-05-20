@@ -21,3 +21,11 @@ class User(AbstractUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class Token(Token):
+    """create multiple tokens per user - override default rest_framework Token class
+    replace model one-to-one relationship with foreign key"""
+
+    key = models.CharField(max_length=40, db_index=True, unique=True)
+    user = models.ForeignKey(User, related_name='auth_token', on_delete=models.CASCADE)

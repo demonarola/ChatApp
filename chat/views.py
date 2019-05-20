@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
-from rest_framework.authtoken.models import Token
+from accounts.models import Token
 import json
 
 from .models import ChatRoom
@@ -28,3 +28,5 @@ def room(request, room_name):
         'room_id': room_id, 'token': token,
         'user': user.id
     })
+
+

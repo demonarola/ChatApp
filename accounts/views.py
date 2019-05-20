@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
 from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
-from django.urls import reverse
-
 from django.contrib import messages
-from django.contrib.auth import login, get_user_model
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout, get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -18,6 +11,15 @@ from django.utils.translation import activate
 from rest_framework.decorators import api_view
 from rest_framework.decorators import authentication_classes, permission_classes
 from django.template.loader import render_to_string
+from .models import Token
+from django.contrib.auth.signals import user_logged_in
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as django_login
+
+from accounts.models import User
+
 from accounts.forms import (
     RegistrationForm,
     EditProfileForm
@@ -91,87 +93,29 @@ def register_activate(request, uidb64, token):
     else:
         return render(request, 'accounts/register_activation_invalid.html')
 
+class LoginView(APIView):
 
-# @login_required
-# @api_view(['GET'])
-# def view_profile(request, pk=None):
-#     if pk:
-#         user = User.objects.get(pk=pk)
-#     else:
-#         user = request.user
-#     args = {'user': user}
-#     return render(request, 'accounts/profile.html', args)
-#
-#
-# @login_required
-# @api_view(['GET', 'POST', 'PUT'])
-# def edit_profile(request):
-#     if request.method == 'POST':
-#         form = EditProfileForm(request.POST, instance=request.user)
-#
-#         if form.is_valid():
-#             form.save()
-#             messages.info(request, _("Your information has been updated!"))
-#         else:
-#             messages.warning(request, form.errors)
-#         return redirect(reverse('accounts:view_profile'))
-#     else:
-#         form = EditProfileForm(instance=request.user)
-#         args = {'form': form}
-#         return render(request, 'accounts/profile_edit.html', args)
-#
-#
-# @login_required
-# @api_view(['GET', 'POST', 'PUT'])
-# def change_password(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(data=request.POST, user=request.user)
-#
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#             messages.info(request, _("Your Password has been updated!"))
-#             return redirect(reverse('accounts:view_profile'))
-#         else:
-#             messages.warning(request, form.errors)
-#             return redirect(reverse('accounts:change_password'))
-#     else:
-#         form = PasswordChangeForm(user=request.user)
-#
-#         args = {'form': form}
-#         return render(request, 'accounts/change_password.html', args)
+    def post(self, request, format=None):
+        print(request.data,"---------")
+        user = authenticate(username=request.data.get('username'), password=request.data.get('password'))
+        django_login(request, user)
+
+        # token_ttl = self.get_token_ttl()
+        print(request.user)
+        token = Token.objects.create(user=request.user)
+        user_logged_in.send(sender=user.__class__,
+                            request=request, user=user)
+        data = {
+            'user': user.username,
+            'token': token.key
+        }
+        return Response(data)
 
 
-# @receiver(reset_password_token_created)
-# def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-#     """
-#     Handles password reset tokens
-#     When a token is created, an e-mail needs to be sent to the user
-#     :param sender: View Class that sent the signal
-#     :param instance: View Instance that sent the signal
-#     :param reset_password_token: Token Model Object
-#     :param args:
-#     :param kwargs:
-#     :return:
-#     """
-#     context = {
-#         'current_user': reset_password_token.user,
-#         'username': reset_password_token.user.username,
-#         'email': reset_password_token.user.email,
-#         'reset_password_url': "{}?token={}".format(reverse('password_reset:reset-password-request'), reset_password_token.key)
-#     }
-#     email_html_message = render_to_string('email/user_reset_password.html', context)
-#     email_plaintext_message = render_to_string('email/user_reset_password.txt', context)
-#
-#     msg = EmailMultiAlternatives(
-#         # title:
-#         _("Password Reset for {title}").format(title="Tranki App"),
-#         # message:
-#         email_plaintext_message,
-#         # from:
-#         settings.DEFAULT_FROM_EMAIL,
-#         # to:
-#         [reset_password_token.user.email]
-#     )
-#     msg.attach_alternative(email_html_message, "text/html")
-#     msg.send()
+class LogoutView(APIView):
+    # authentication_classes = (TokenAuthentication, )
+
+    def post(self, request):
+        request.auth.delete()
+        logout(request)
+        return Response("Logout Successful!", status=204)

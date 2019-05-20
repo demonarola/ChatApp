@@ -21,10 +21,12 @@ from .routers import router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('accounts.urls', namespace='accounts')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
     re_path(r'^chat/', include(('chat.urls', 'chat'), namespace='chat')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     # re_path(r'^(?:.*)/?$', TemplateView.as_view(
     #     template_name='accounts/profile.html'), name='home'),
-    path('api/v1/', include((router.urls, 'chats'), namespace='api')),
+    # re_path(r'api/auth/', include('knox.urls')),
+    # re_path(r'api/auth/login_user/', LoginView.as_view()),
+    path('api/v1/', include((router.urls, 'chats'), namespace='api'))
 ]
